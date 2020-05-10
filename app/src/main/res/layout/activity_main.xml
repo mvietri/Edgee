@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#Fff"
+        android:orientation="vertical"
+        android:padding="16dp"
+        >
+
+        <Switch
+            android:id="@+id/switch_service"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/switch_hint" />
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="25dp"
+            android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_height="25dp"
+                    android:layout_width="match_parent"
+                    android:text="Radius Size"
+                    />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <SeekBar
+                    android:id="@+id/seekBar"
+                    android:min="1"
+                    android:max="20"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content" />
+
+
+                <TextView
+                    android:id="@+id/textViewSeekbarValue"
+                    android:text="10px"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
