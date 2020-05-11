@@ -1,6 +1,6 @@
 # Edgee
 
-Colored battery and notifications indicator using the notch's edges. At glance.
+Colored battery indicator using the notch's edges. At glance.
 
 # An early-stage work in progress
  
