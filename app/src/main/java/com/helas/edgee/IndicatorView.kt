@@ -14,48 +14,33 @@ import androidx.core.content.ContextCompat
 /**
  * TODO: document your custom view class.
  */
-class Circle : View {
+class IndicatorView : View {
+    private var arcAngle = 180f
+    private var strokeWidth = 10f
 
-    private val paint = Paint().apply {
-        color = Color.RED
-        style = Paint.Style.STROKE
-        strokeWidth = 5f
+    fun getStrokeWidth(): Float {
+        return strokeWidth
     }
 
+    fun getArcAngle(): Float {
+        return arcAngle
+    }
 
-    constructor(context: Context) : super(context) {
-        init(null, 0)
+    fun setStrokeWidth(strokeWidth: Float) {
+        this.strokeWidth = strokeWidth
+    }
+
+    fun setArcAngle(arcAngle: Float) {
+        Log.i("seeting arc angle", arcAngle.toString())
+        this.arcAngle = arcAngle
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init(attrs, 0)
-    }
-
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(
-        context,
-        attrs,
-        defStyle
-    ) {
-        init(attrs, defStyle)
-    }
-
-    private fun init(attrs: AttributeSet?, defStyle: Int) {
-        // Load attributes
-        val a = context.obtainStyledAttributes(
-            attrs, R.styleable.Circle, defStyle, 0
-        )
-
-        a.recycle()
-
-        // Update TextPaint and text measurements from attributes
-        invalidateTextPaintAndMeasurements()
-    }
-
-    private fun invalidateTextPaintAndMeasurements() {
 
     }
 
     override fun onDraw(canvas: Canvas) {
+        Log.i("EE-LEVEL",  "onDraw()")
         super.onDraw(canvas)
 
         // TODO: consider storing these as member variables to reduce
@@ -95,7 +80,7 @@ var bat = this.getBatteryPercentage(getContext())
 
         val paint = Paint()
         paint.color = Color.parseColor("#eb4034")
-        paint.strokeWidth = 9f
+        paint.strokeWidth = strokeWidth
         paint.style = Paint.Style.STROKE
 
         val center_x: Float
@@ -141,7 +126,7 @@ var bat = this.getBatteryPercentage(getContext())
         paint.shader = sweepGradient
 
 
-        canvas.drawArc(oval, 180f, bat.toFloat(), false  , paint)
+        canvas.drawArc(oval, this.arcAngle, bat.toFloat(), false  , paint)
     }
 
     fun getBatteryPercentage(context: Context): Int {

@@ -1,10 +1,9 @@
 package com.helas.edgee
 
 import android.accessibilityservice.AccessibilityService
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
+import android.content.pm.ActivityInfo
+import android.content.pm.PackageManager
 import android.graphics.PixelFormat
 import android.os.BatteryManager
 import android.util.Log
@@ -13,7 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
-import com.helas.edgee.R
+import kotlinx.android.synthetic.main.activity_indicator.view.*
 
 
 class OverlayService: AccessibilityService() {
@@ -21,45 +20,59 @@ class OverlayService: AccessibilityService() {
 
     private val mBatInfoReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(ctxt: Context?, intent: Intent) {
+            val extras = intent.extras
+//            if (extras != null)
+//            {
+//               val rec_data = extras.getString("start_angle_changed");
+//                Log.d("Received Start Angle Msg : ", rec_data);
+//            }
             val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)
-            Log.i("EE-Event",  "$level%")
+            Log.i("EE-Event", "$level%")
+            updateIndicator()
+        }
+    }
 
-            // update circle
+    fun updateIndicator() {
+        Log.i("EE-Event", "Redraw")
 
-
-                  val inflater =
+        val inflater =
             baseContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-       val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
-            val customView = inflater.inflate(R.layout.activity_notch, null)
-
-
-            val localLayoutParams = WindowManager.LayoutParams()
-            localLayoutParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY
-            localLayoutParams.gravity = Gravity.TOP
-            localLayoutParams.flags =
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
-                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                        WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM or
-                        WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH or
-                        WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or  // Draws over status bar
-                        WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
-                        WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-            localLayoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
-            localLayoutParams.height  =  WindowManager.LayoutParams.WRAP_CONTENT
-            localLayoutParams.format = PixelFormat.TRANSPARENT
-
-            wm.addView(customView, localLayoutParams)
+        val customView = inflater.inflate(R.layout.activity_indicator, null)
 
 
-            try {
-                wm.removeView(lastCustomView)
-            } catch (e: Exception) {
-            }
+        val localLayoutParams = WindowManager.LayoutParams()
+        localLayoutParams.type = WindowManager.LayoutParams.TYPE_ACCESSIBILITY_OVERLAY
+        localLayoutParams.gravity = Gravity.TOP
+        localLayoutParams.flags =
+            WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE or
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
+                    WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM or
+                    WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH or
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or  // Draws over status bar
+                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        localLayoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
+        localLayoutParams.height  =  WindowManager.LayoutParams.WRAP_CONTENT
+        localLayoutParams.format = PixelFormat.TRANSPARENT
 
-            lastCustomView = customView
+        val prefs = getSharedPreferences("StartingAngleValue", Context.MODE_PRIVATE)
+        var arcAngle = prefs.getFloat("Angle", 180f)
+        var strokeWidth = prefs.getFloat("StrokeWidth", 10f)
+
+        customView.indicator.setArcAngle(arcAngle)
+        customView.indicator.setStrokeWidth(strokeWidth)
+
+        wm.addView(customView, localLayoutParams)
+
+        try {
+            wm.removeView(lastCustomView)
+        } catch (e: Exception) {
         }
+
+        lastCustomView = customView
     }
 
     override fun onInterrupt() {
@@ -77,10 +90,34 @@ class OverlayService: AccessibilityService() {
         Log.i("EE-Event",  "Service Connected")
     }
 
-    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-        val source = event!!.source ?: return
-        Log.i("EE-Event", event.toString() + "")
-        //Log.i("EE-Source", source.toString() + "")
+    override fun onAccessibilityEvent(event: AccessibilityEvent) {
+        Log.i("GOT Event", event.eventType.toString())
+        if (event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED || event.eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
+            if (event.packageName != null && event.className != null) {
+                val componentName = ComponentName(
+                    event.packageName.toString(),
+                    event.className.toString()
+                )
+
+                if (componentName.flattenToShortString() == "com.helas.edgee/android.widget.TextView") {
+                    updateIndicator()
+                }
+
+//                val activityInfo = tryGetActivity(componentName)
+//                val isActivity = activityInfo != null
+//                if (isActivity)
+//                    if (componentName.flattenToShortString() == "com.helas.edgee/.MainActivity")
+//                        updateIndicator()
+            }
+        }
+    }
+
+    private fun tryGetActivity(componentName: ComponentName): ActivityInfo? {
+        try {
+            return packageManager.getActivityInfo(componentName, 0)
+        } catch (e: PackageManager.NameNotFoundException) {
+            return null
+        }
 
     }
 }
