@@ -34,7 +34,8 @@ deploy:
   target_commitish: $TRAVIS_COMMIT
   name: $TRAVIS_TAG
   api_key: $GITHUB_API_KEY
-  file: 'app/build/outputs/apk/*.apk'
+  file_glob: true
+  file: $TRAVIS_BUILD_DIR/app/build/outputs/apk/release/*.apk
   draft: true
   skip_cleanup: true
   on:
