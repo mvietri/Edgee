@@ -14,11 +14,11 @@ android:
     - extra-google-m2repository 
     - addon-google_apis-google-29    
 before_deploy:
-- export TRAVIS_TAG="release-$(git rev-parse --short ${TRAVIS_COMMIT})"
+- export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
 - echo "$TRAVIS_TAG" "$TRAVIS_COMMIT"
 - git config --local user.name "Helas"
 - git config --local user.email "helas@runbox.me"
-- git tag "$TRAVIS_TAG" "$TRAVIS_COMMIT"
+- git tag $TRAVIS_TAG
 before_install: 
 - yes | sdkmanager "build-tools;29.0.3"
 - chmod +x gradlew 
@@ -27,7 +27,7 @@ before_install:
 after_success: 
 - chmod +x ./upload-gh-pages.sh
 script: 
-- ./gradlew build
+- ./gradlew testDebugUnitTest
 deploy:
   provider: releases
   tag_name: $TRAVIS_TAG
@@ -35,7 +35,7 @@ deploy:
   name: $TRAVIS_TAG
   api_key: $GITHUB_API_KEY
   file_glob: true
-  file: $TRAVIS_BUILD_DIR/app/build/outputs/apk/release/*.apk
+  file: $TRAVIS_BUILD_DIR/app/build/outputs/apk/debug/app-debug.apk
   draft: true
   skip_cleanup: true
   on:
