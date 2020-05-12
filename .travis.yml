@@ -19,8 +19,7 @@ before_install:
 - export JAVA8_HOME=/usr/lib/jvm/java-8-oracle 
 - export JAVA_HOME=$JAVA8_HOME 
 after_success: 
-- chmod +x ./upload-gh-pages.sh 
-- ./upload-apk.sh 
+- chmod +x ./upload-gh-pages.sh
 script: 
 - ./gradlew build
 deploy:
@@ -33,4 +32,4 @@ deploy:
   draft: true
   skip_cleanup: true
   on:
-    branch: travis-ci
+    branch: master
