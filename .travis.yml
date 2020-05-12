@@ -27,7 +27,7 @@ before_install:
 after_success: 
 - chmod +x ./upload-gh-pages.sh
 script: 
-- ./gradlew testDebugUnitTest
+- ./gradlew assembleDebug --stacktrace
 deploy:
   provider: releases
   tag_name: $TRAVIS_TAG
