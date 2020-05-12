@@ -12,7 +12,13 @@ android:
     - extra-google-google_play_services 
     - extra-android-m2repository 
     - extra-google-m2repository 
-    - addon-google_apis-google-29 
+    - addon-google_apis-google-29    
+before_deploy:
+- export TRAVIS_TAG="release-$(git rev-parse --short ${TRAVIS_COMMIT})"
+- echo "$TRAVIS_TAG" "$TRAVIS_COMMIT"
+- git config --local user.name "Helas"
+- git config --local user.email "helas@runbox.me"
+- git tag "$TRAVIS_TAG" "$TRAVIS_COMMIT"
 before_install: 
 - yes | sdkmanager "build-tools;29.0.3"
 - chmod +x gradlew 
