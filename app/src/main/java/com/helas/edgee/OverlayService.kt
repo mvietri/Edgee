@@ -57,12 +57,20 @@ class OverlayService: AccessibilityService() {
         localLayoutParams.format = PixelFormat.TRANSPARENT
 
         val prefs = getSharedPreferences("StartingAngleValue", Context.MODE_PRIVATE)
-        var arcAngle = prefs.getFloat("Angle", 180f)
+
+        var startAngle = prefs.getFloat("StartAngle", 0f)
+        var endAngle = prefs.getFloat("EndAngle", 360f)
+        var xPosition = prefs.getFloat("XPosition", 0f)
+        var yPosition = prefs.getFloat("YPosition", 0f)
         var strokeWidth = prefs.getFloat("StrokeWidth", 10f)
+        var radius = prefs.getFloat("Radius", 30f)
 
 
-        customView.indicator.setArcAngle(arcAngle)
+        customView.indicator.setAngles(startAngle, endAngle)
+        customView.indicator.setPosition(xPosition, yPosition)
         customView.indicator.setStrokeWidth(strokeWidth)
+        customView.indicator.setRadius(radius)
+
         if (isCharging)
             customView.indicator.enableAnimation()
 

@@ -18,8 +18,15 @@ import androidx.core.content.ContextCompat
  * TODO: document your custom view class.
  */
 class IndicatorView : View {
-    private var arcAngle = 180f
+    private var startAngle = 0f
+    private var endAngle = 360f
+
+    private var radius = 30f
+
     private var strokeWidth = 10f
+
+    private var xPosition = 0f
+    private var yPosition = 0f
 
     private var isChargingAnimationOn: Boolean = false;
 
@@ -28,20 +35,29 @@ class IndicatorView : View {
     }
 
     fun getArcAngle(): Float {
-        return arcAngle
+        return startAngle
     }
 
     fun enableAnimation() {
-        startAnimation(ChargingAnimation(0, 1, 100000))
+        startAnimation(ChargingAnimation(0f, 360f, 2500 ))
     }
 
     fun setStrokeWidth(strokeWidth: Float) {
         this.strokeWidth = strokeWidth
     }
 
-    fun setArcAngle(arcAngle: Float) {
-        Log.i("seeting arc angle", arcAngle.toString())
-        this.arcAngle = arcAngle
+    fun setAngles(startAngle: Float, endAngle: Float) {
+        this.startAngle = startAngle
+        this.endAngle = endAngle
+    }
+
+    fun setPosition(x: Float, y: Float) {
+        this.xPosition = x
+        this.yPosition = y
+    }
+
+    fun setRadius(r: Float) {
+        this.radius = r
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
@@ -49,7 +65,7 @@ class IndicatorView : View {
     }
 
 
-    inner class ChargingAnimation(startAngle: Int, sweepAngle: Int, duration: Long) :
+    inner class ChargingAnimation(startAngle: Float, sweepAngle: Float, duration: Long) :
         Animation() {
         var mStartAngle: Float
         var mSweepAngle: Float
@@ -58,8 +74,8 @@ class IndicatorView : View {
             t: Transformation?
         ) {
             val currAngle =
-                mStartAngle + (mSweepAngle * 10000) * interpolatedTime
-            this@IndicatorView.arcAngle = -currAngle //negative for counterclockwise animation.
+                mStartAngle + (mSweepAngle * interpolatedTime)
+            this@IndicatorView.startAngle = -currAngle //negative for counterclockwise animation.
             invalidate()
         }
 
@@ -68,6 +84,8 @@ class IndicatorView : View {
             mSweepAngle = sweepAngle.toFloat()
             setDuration(duration)
             interpolator = LinearInterpolator()
+            setRepeatCount(Animation.INFINITE)
+            setRepeatMode(Animation.RESTART)
         }
     }
 
@@ -93,26 +111,12 @@ var bat = this.getBatteryPercentage(getContext())
             this.isChargingAnimationOn = true;
         }
 
-       bat = ((bat * 360) / 100)
+       bat = (((bat * this.endAngle) / 100).toInt())
 
         Log.i("EE-LEVEL",  "$bat%")
 
         val width = width.toFloat()
         val height = height.toFloat()
-        val radius: Float
-
-        radius = if (width > height) {
-            height / 4
-        } else {
-            width / 4
-        }
-
-        val path = Path()
-        path.addCircle(
-            width / 2,
-            height / 2, radius,
-            Path.Direction.CW
-        )
 
         val paint = Paint()
         paint.color = Color.parseColor("#eb4034")
@@ -124,10 +128,10 @@ var bat = this.getBatteryPercentage(getContext())
         val oval = RectF()
         paint.style = Paint.Style.STROKE
 
-        center_x = (width / 2) - 23
-        center_y = (height / 2) - 36
+        center_x = xPosition
+        center_y = yPosition
 
-        oval[center_x - radius, center_y - radius, center_x + radius] = center_y + radius
+        oval[(center_x - radius), (center_y - radius), center_x + radius] = center_y + radius
 
           /*val colors = intArrayOf(
               ContextCompat.getColor(context, R.color.progress_color_step0),
@@ -153,16 +157,16 @@ var bat = this.getBatteryPercentage(getContext())
             ContextCompat.getColor(context, R.color.progress_color_step2)
         )
 
-        var positions = floatArrayOf(0.1f, 0.30f, 0.55f, 0.70f, 1.00f)
+        var positions = floatArrayOf(0f, 20f, 55f, 70f, 200f)
 
           var sweepGradient : SweepGradient? = null
 
-        sweepGradient = SweepGradient((width / 2) - 23,(height / 2) - 36, colors,  positions)
+        sweepGradient = SweepGradient(0f,1000.0f, colors,  positions)
 
         paint.shader = sweepGradient
 
 
-        canvas.drawArc(oval, this.arcAngle, bat.toFloat(), false  , paint)
+        canvas.drawArc(oval, this.startAngle, bat.toFloat(), false  , paint)
     }
 
     fun getBatteryPercentage(context: Context): Int {
