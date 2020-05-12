@@ -8,6 +8,9 @@ import android.os.BatteryManager
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.LinearInterpolator
+import android.view.animation.Transformation
 import androidx.core.content.ContextCompat
 
 
@@ -18,12 +21,18 @@ class IndicatorView : View {
     private var arcAngle = 180f
     private var strokeWidth = 10f
 
+    private var isChargingAnimationOn: Boolean = false;
+
     fun getStrokeWidth(): Float {
         return strokeWidth
     }
 
     fun getArcAngle(): Float {
         return arcAngle
+    }
+
+    fun enableAnimation() {
+        startAnimation(ChargingAnimation(0, 1, 100000))
     }
 
     fun setStrokeWidth(strokeWidth: Float) {
@@ -37,6 +46,29 @@ class IndicatorView : View {
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
 
+    }
+
+
+    inner class ChargingAnimation(startAngle: Int, sweepAngle: Int, duration: Long) :
+        Animation() {
+        var mStartAngle: Float
+        var mSweepAngle: Float
+        override fun applyTransformation(
+            interpolatedTime: Float,
+            t: Transformation?
+        ) {
+            val currAngle =
+                mStartAngle + (mSweepAngle * 10000) * interpolatedTime
+            this@IndicatorView.arcAngle = -currAngle //negative for counterclockwise animation.
+            invalidate()
+        }
+
+        init {
+            mStartAngle = startAngle.toFloat()
+            mSweepAngle = sweepAngle.toFloat()
+            setDuration(duration)
+            interpolator = LinearInterpolator()
+        }
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -56,6 +88,10 @@ class IndicatorView : View {
         //canvas?.drawCircle(100f, 20f, 70f, paint)
 var bat = this.getBatteryPercentage(getContext())
 
+        if (bat >= 70 && !this.isChargingAnimationOn) {
+         //   startAnimation(ChargingAnimation(0, 10, 100000))
+            this.isChargingAnimationOn = true;
+        }
 
        bat = ((bat * 360) / 100)
 

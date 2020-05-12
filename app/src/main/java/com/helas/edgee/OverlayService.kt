@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.graphics.PixelFormat
 import android.os.BatteryManager
+
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -20,19 +21,16 @@ class OverlayService: AccessibilityService() {
 
     private val mBatInfoReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(ctxt: Context?, intent: Intent) {
-            val extras = intent.extras
-//            if (extras != null)
-//            {
-//               val rec_data = extras.getString("start_angle_changed");
-//                Log.d("Received Start Angle Msg : ", rec_data);
-//            }
             val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)
-            Log.i("EE-Event", "$level%")
-            updateIndicator()
+            val status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
+            val isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL
+            Log.i("EE-Event Level", "$level%")
+            Log.i("EE-Event AC", "$isCharging")
+            updateIndicator(isCharging)
         }
     }
 
-    fun updateIndicator() {
+    fun updateIndicator(isCharging: Boolean = false) {
         Log.i("EE-Event", "Redraw")
 
         val inflater =
@@ -62,8 +60,11 @@ class OverlayService: AccessibilityService() {
         var arcAngle = prefs.getFloat("Angle", 180f)
         var strokeWidth = prefs.getFloat("StrokeWidth", 10f)
 
+
         customView.indicator.setArcAngle(arcAngle)
         customView.indicator.setStrokeWidth(strokeWidth)
+        if (isCharging)
+            customView.indicator.enableAnimation()
 
         wm.addView(customView, localLayoutParams)
 
