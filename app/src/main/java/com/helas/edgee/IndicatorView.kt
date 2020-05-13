@@ -3,7 +3,10 @@ package com.helas.edgee
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.RectF
 import android.os.BatteryManager
 import android.util.AttributeSet
 import android.util.Log
@@ -11,12 +14,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.Transformation
-import androidx.core.content.ContextCompat
 
-
-/**
- * TODO: document your custom view class.
- */
 class IndicatorView : View {
     private var startAngle = 0f
     private var endAngle = 360f
@@ -27,6 +25,9 @@ class IndicatorView : View {
 
     private var xPosition = 0f
     private var yPosition = 0f
+
+    private val gradientColors = intArrayOf(R.color.progress_color_step0, R.color.progress_color_step1)
+    private val gradientPositions = floatArrayOf(10f, 50f)
 
     private var isChargingAnimationOn: Boolean = false;
 
@@ -118,55 +119,43 @@ var bat = this.getBatteryPercentage(getContext())
         val width = width.toFloat()
         val height = height.toFloat()
 
+        val paintBlack = Paint()
+        paintBlack.strokeWidth = strokeWidth
+        paintBlack.style = Paint.Style.STROKE
+        paintBlack.color = Color.parseColor("#000000")
+
         val paint = Paint()
-        paint.color = Color.parseColor("#eb4034")
         paint.strokeWidth = strokeWidth
         paint.style = Paint.Style.STROKE
+        paint.color = Color.parseColor("#ef476f")
 
         val center_x: Float
         val center_y: Float
         val oval = RectF()
-        paint.style = Paint.Style.STROKE
 
         center_x = xPosition
         center_y = yPosition
 
         oval[(center_x - radius), (center_y - radius), center_x + radius] = center_y + radius
 
-          /*val colors = intArrayOf(
-              ContextCompat.getColor(context, R.color.progress_color_step0),
-              ContextCompat.getColor(context, R.color.progress_color_step0),
-              ContextCompat.getColor(context, R.color.progress_color_step0),
-              ContextCompat.getColor(context, R.color.progress_color_step0),
-              ContextCompat.getColor(context, R.color.progress_color_step0),
-              ContextCompat.getColor(context, R.color.progress_color_step0),
-              ContextCompat.getColor(context, R.color.progress_color_step1),
-              ContextCompat.getColor(context, R.color.progress_color_step0),
-              ContextCompat.getColor(context, R.color.progress_color_step0),
-              ContextCompat.getColor(context, R.color.progress_color_step0),
-              ContextCompat.getColor(context, R.color.progress_color_step0)
-          )
+        //paint.shader = SweepGradient(getWidth() /2f , getHeight() / 2f, gradientColors, gradientPositions)
 
-          var positions = floatArrayOf(0.0f, 0.1f, 0.2f, 0.3f, 0.35f, 0.45f, 0.50f, 0.75f, 0.9f, 0.9f, 1.0f)*/
-
-        val colors = intArrayOf(
-            ContextCompat.getColor(context, R.color.progress_color_step4),
-            ContextCompat.getColor(context, R.color.progress_color_step5),
-            ContextCompat.getColor(context, R.color.progress_color_step3),
-            ContextCompat.getColor(context, R.color.progress_color_step6),
-            ContextCompat.getColor(context, R.color.progress_color_step2)
-        )
-
-        var positions = floatArrayOf(0f, 20f, 55f, 70f, 200f)
-
-          var sweepGradient : SweepGradient? = null
-
-        sweepGradient = SweepGradient(0f,1000.0f, colors,  positions)
-
-        paint.shader = sweepGradient
+        canvas.save()
+      //  canvas.rotate(115f, xPosition, yPosition)
+        //canvas.drawArc(oval, startAngle, bat.toFloat(), false, paint)
 
 
-        canvas.drawArc(oval, this.startAngle, bat.toFloat(), false  , paint)
+        // canvas.drawArc(oval, startAngle, bat.toFloat(), false, paint)
+
+
+        canvas.drawArc(oval, 0f, 360f, false, paintBlack)
+
+        canvas.drawArc(oval, startAngle, bat.toFloat(), false, paint)
+
+       // canvas.drawCircle(xPosition, xPosition, radius, paint)
+        canvas.restore()
+
+       // canvas.drawArc(oval, this.startAngle, bat.toFloat(), false, paint)
     }
 
     fun getBatteryPercentage(context: Context): Int {
@@ -184,3 +173,5 @@ var bat = this.getBatteryPercentage(getContext())
         return (batteryPct * 100).toInt()
     }
 }
+
+

@@ -4,6 +4,7 @@ import android.accessibilityservice.AccessibilityService
 import android.content.*
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.BatteryManager
 
@@ -71,8 +72,8 @@ class OverlayService: AccessibilityService() {
         customView.indicator.setStrokeWidth(strokeWidth)
         customView.indicator.setRadius(radius)
 
-        if (isCharging)
-            customView.indicator.enableAnimation()
+//        if (isCharging)
+//            customView.indicator.enableAnimation()
 
         wm.addView(customView, localLayoutParams)
 

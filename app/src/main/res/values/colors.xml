@@ -5,13 +5,7 @@
     <color name="colorAccent">#3900B5</color>
 
     <color name="progress_color_step0">#ffffff</color>
-    <color name="progress_color_step1">#f94144</color>
-
-    <color name="progress_color_step2">#fcfcfc</color>
-    <color name="progress_color_step3">#06d6a0</color>
-    <color name="progress_color_step5">#ffd166</color>
-    <color name="progress_color_step4">#ef476f</color>
-    <color name="progress_color_step6">#26547c</color>
+    <color name="progress_color_step1">#ef476f</color>
 
 
 <!--    <color name="progress_color_step2">#9e0059</color>-->

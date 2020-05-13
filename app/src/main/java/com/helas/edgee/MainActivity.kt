@@ -118,7 +118,38 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        })
 
-        btnPosYMinus.setOnClickListener(object: View.OnClickListener {
+        btnPosYMinusOne.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+                yPosition = yPosition - 1
+
+                val t = findViewById(R.id.textViewYValue) as TextView
+                t.text = yPosition.toString()
+
+                val editor =
+                    getSharedPreferences("StartingAngleValue", Context.MODE_PRIVATE).edit()
+                editor.putFloat("YPosition", yPosition.toFloat())
+                editor.apply()
+            }
+        })
+
+
+        btnPosYPlusOne.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+                yPosition = yPosition +1
+
+                val t = findViewById(R.id.textViewYValue) as TextView
+                t.text = yPosition.toString()
+
+                val editor =
+                    getSharedPreferences("StartingAngleValue", Context.MODE_PRIVATE).edit()
+                editor.putFloat("YPosition", yPosition.toFloat())
+                editor.apply()
+            }
+        })
+
+
+
+        btnPosYMinusTen.setOnClickListener(object: View.OnClickListener {
             override fun onClick(v: View?) {
                 yPosition = yPosition - 10
 
@@ -133,7 +164,7 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-        btnPosYPlus.setOnClickListener(object: View.OnClickListener {
+        btnPosYPlusTen.setOnClickListener(object: View.OnClickListener {
             override fun onClick(v: View?) {
                 yPosition = yPosition +10
 
@@ -148,12 +179,13 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-        btnPosXMinus.setOnClickListener(object: View.OnClickListener {
+
+        btnPosXMinusOne.setOnClickListener(object: View.OnClickListener {
             override fun onClick(v: View?) {
-                xPosition = xPosition - 10
+                xPosition = xPosition - 1
 
                 val t = findViewById(R.id.textViewXValue) as TextView
-                t.text = yPosition.toString()
+                t.text = xPosition.toString()
 
                 val editor =
                     getSharedPreferences("StartingAngleValue", Context.MODE_PRIVATE).edit()
@@ -163,7 +195,38 @@ class MainActivity : AppCompatActivity() {
         })
 
 
-        btnPosXPlus.setOnClickListener(object: View.OnClickListener {
+        btnPosXPlusOne.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+                xPosition = xPosition +1
+
+                val t = findViewById(R.id.textViewXValue) as TextView
+                t.text = xPosition.toString()
+
+                val editor =
+                    getSharedPreferences("StartingAngleValue", Context.MODE_PRIVATE).edit()
+                editor.putFloat("XPosition", xPosition.toFloat())
+                editor.apply()
+            }
+        })
+
+
+
+        btnPosXMinusTen.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+                xPosition = xPosition - 10
+
+                val t = findViewById(R.id.textViewXValue) as TextView
+                t.text = xPosition.toString()
+
+                val editor =
+                    getSharedPreferences("StartingAngleValue", Context.MODE_PRIVATE).edit()
+                editor.putFloat("XPosition", xPosition.toFloat())
+                editor.apply()
+            }
+        })
+
+
+        btnPosXPlusTen.setOnClickListener(object: View.OnClickListener {
             override fun onClick(v: View?) {
                 xPosition = xPosition +10
 
