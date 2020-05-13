@@ -12,270 +12,48 @@
         android:layout_height="match_parent"
         android:background="#Fff"
         android:orientation="vertical"
-        android:padding="16dp"
-        >
+        android:padding="16dp">
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/switch_service"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/switch_hint" />
 
-
-        <LinearLayout
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            app:tabPaddingBottom="10dp"
+            app:tabPaddingEnd="5dp"
+            app:tabPaddingStart="5dp"
+            app:tabPaddingTop="15dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingTop="25dp">
+            android:layout_height="wrap_content">
 
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:text="Stroke Width" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <SeekBar
-                    android:id="@+id/seekBarStrokeWidth"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:max="56"
-                    android:min="1"
-                    android:progress="9" />
-
-
-                <TextView
-                    android:id="@+id/textViewSeekbarStrokeWidthValue"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="10" />
-
-            </LinearLayout>
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:text="Starting Angle" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <SeekBar
-                    android:id="@+id/seekBarStartAngle"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:max="360"
-                    android:min="1"
-                    android:progress="1" />
-
-
-                <TextView
-                    android:id="@+id/textViewSeekbarStartAngleValue"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="0 degrees" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:text="Ending Angle" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <SeekBar
-                    android:id="@+id/seekBarEndAngle"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:max="360"
-                    android:min="1"
-                    android:progress="360" />
-
-
-                <TextView
-                    android:id="@+id/textViewSeekbarEndAngleValue"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="360 degrees" />
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:text="X position" />
-
-
-            <LinearLayout
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:text="Position" />
 
-                <Button
-                    android:id="@+id/btnPosXMinusTen"
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:text="-10" />
-
-                <!--                <SeekBar-->
-                <!--                    android:id="@+id/seekBarY"-->
-                <!--                    android:layout_width="150dp"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:max="2000"-->
-                <!--                    android:min="1"-->
-                <!--                    android:progress="100" />-->
-
-
-                <Button
-                    android:id="@+id/btnPosXMinusOne"
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:text="-1" />
-
-                <TextView
-                    android:id="@+id/textViewXValue"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:text="0"
-                    android:textSize="38dp" />
-
-                <Button
-                    android:id="@+id/btnPosXPlusOne"
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:text="+1" />
-                <Button
-                    android:id="@+id/btnPosXPlusTen"
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:text="+10" />
-
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:text="Y Position" />
-
-
-            <LinearLayout
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItem2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:text="Stroke/Colors" />
 
-
-                <Button
-                    android:id="@+id/btnPosYMinusTen"
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:text="-10" />
-
-<!--                <SeekBar-->
-<!--                    android:id="@+id/seekBarY"-->
-<!--                    android:layout_width="150dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:max="2000"-->
-<!--                    android:min="1"-->
-<!--                    android:progress="100" />-->
-
-                <Button
-                    android:id="@+id/btnPosYMinusOne"
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:text="-1" />
-
-                <TextView
-                    android:id="@+id/textViewYValue"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:text="0"
-                    android:textSize="38dp" />
-
-                <Button
-                    android:id="@+id/btnPosYPlusOne"
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:text="+1" />
-
-                <Button
-                    android:id="@+id/btnPosYPlusTen"
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:text="+10" />
-
-
-
-            </LinearLayout>
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:text="Radius" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/tabItem3"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:text="Angles" />
+        </com.google.android.material.tabs.TabLayout>
 
-                <SeekBar
-                    android:id="@+id/seekBarRadius"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:max="250"
-                    android:min="1"
-                    android:progress="30" />
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vpPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-
-                <TextView
-                    android:id="@+id/textViewRadiusValue"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="30" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/btnRemainingColor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Set Remaining battery color" />
-
-            <Button
-                android:id="@+id/btnNotAvailableColor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Set No-battery color" />
-
-            <Button
-                android:id="@+id/btnBackgroundColor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Set Background color" />
-
-
-        </LinearLayout>
-
+        </androidx.viewpager.widget.ViewPager>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

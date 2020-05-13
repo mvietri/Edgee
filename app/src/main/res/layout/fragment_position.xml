@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PositionFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="5dp"
+        android:orientation="vertical">
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:text="X position" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                app:cornerRadius="5dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/btnPosXMinusTen"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:text="-10" />
+
+            <!--                <SeekBar-->
+            <!--                    android:id="@+id/seekBarY"-->
+            <!--                    android:layout_width="150dp"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:max="2000"-->
+            <!--                    android:min="1"-->
+            <!--                    android:progress="100" />-->
+
+
+
+            <com.google.android.material.button.MaterialButton
+                app:cornerRadius="5dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/btnPosXMinusOne"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:text="-1" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewXValue"
+                android:layout_width="62dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:text="0"
+                android:textSize="38dp" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPosXPlusOne"
+                android:layout_marginRight="10dp"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:text="+1"
+                app:cornerRadius="5dp" />
+
+            <com.google.android.material.button.MaterialButton
+                app:cornerRadius="5dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/btnPosXPlusTen"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:text="+10" />
+
+
+        </LinearLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:text="Y Position" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <com.google.android.material.button.MaterialButton
+                app:cornerRadius="5dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/btnPosYMinusTen"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:text="-10" />
+
+            <!--                <SeekBar-->
+            <!--                    android:id="@+id/seekBarY"-->
+            <!--                    android:layout_width="150dp"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:max="2000"-->
+            <!--                    android:min="1"-->
+            <!--                    android:progress="100" />-->
+
+            <com.google.android.material.button.MaterialButton
+                app:cornerRadius="5dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/btnPosYMinusOne"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:text="-1" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/textViewYValue"
+                android:layout_width="63dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:text="0"
+                android:textSize="38dp" />
+
+            <com.google.android.material.button.MaterialButton
+                app:cornerRadius="5dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/btnPosYPlusOne"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:text="+1" />
+
+            <com.google.android.material.button.MaterialButton
+                app:cornerRadius="5dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/btnPosYPlusTen"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:text="+10" />
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</FrameLayout>
