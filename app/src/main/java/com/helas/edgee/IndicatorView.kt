@@ -26,8 +26,9 @@ class IndicatorView : View {
     private var xPosition = 0f
     private var yPosition = 0f
 
-    private val gradientColors = intArrayOf(R.color.progress_color_step0, R.color.progress_color_step1)
-    private val gradientPositions = floatArrayOf(10f, 50f)
+    private var onColor = Color.GREEN.toInt()
+    private var offColor = Color.RED.toInt()
+    private var bgColor = Color.BLACK.toInt()
 
     private var isChargingAnimationOn: Boolean = false;
 
@@ -59,6 +60,12 @@ class IndicatorView : View {
 
     fun setRadius(r: Float) {
         this.radius = r
+    }
+
+    fun setColors(onColor: Int, offColor: Int, bgColor: Int) {
+        this.onColor = onColor
+        this.offColor = offColor
+        this.bgColor = bgColor
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
@@ -122,12 +129,17 @@ var bat = this.getBatteryPercentage(getContext())
         val paintBlack = Paint()
         paintBlack.strokeWidth = strokeWidth
         paintBlack.style = Paint.Style.STROKE
-        paintBlack.color = Color.parseColor("#000000")
+        paintBlack.color = bgColor
 
         val paint = Paint()
         paint.strokeWidth = strokeWidth
         paint.style = Paint.Style.STROKE
-        paint.color = Color.parseColor("#ef476f")
+        paint.color =offColor
+
+        val paintAvailable = Paint()
+        paintAvailable.strokeWidth = strokeWidth
+        paintAvailable.style = Paint.Style.STROKE
+        paintAvailable.color =onColor
 
         val center_x: Float
         val center_y: Float
@@ -147,10 +159,10 @@ var bat = this.getBatteryPercentage(getContext())
 
         // canvas.drawArc(oval, startAngle, bat.toFloat(), false, paint)
 
-
-        canvas.drawArc(oval, 0f, 360f, false, paintBlack)
-
-        canvas.drawArc(oval, startAngle, bat.toFloat(), false, paint)
+        // optional background
+       if (bgColor != Color.TRANSPARENT) canvas.drawArc(oval, 0f, 360f, false, paintBlack)
+        canvas.drawArc(oval, startAngle, endAngle, false, paint)
+        canvas.drawArc(oval, startAngle,  bat.toFloat(),false, paintAvailable)
 
        // canvas.drawCircle(xPosition, xPosition, radius, paint)
         canvas.restore()

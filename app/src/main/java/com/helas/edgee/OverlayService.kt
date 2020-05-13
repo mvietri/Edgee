@@ -65,12 +65,15 @@ class OverlayService: AccessibilityService() {
         var yPosition = prefs.getFloat("YPosition", 0f)
         var strokeWidth = prefs.getFloat("StrokeWidth", 10f)
         var radius = prefs.getFloat("Radius", 30f)
-
+        var onColor = prefs.getInt("OnColor", Color.GREEN.toInt())
+        var offColor = prefs.getInt("OffColor", Color.RED.toInt())
+        var bgColor = prefs.getInt("BgColor", Color.BLACK.toInt())
 
         customView.indicator.setAngles(startAngle, endAngle)
         customView.indicator.setPosition(xPosition, yPosition)
         customView.indicator.setStrokeWidth(strokeWidth)
         customView.indicator.setRadius(radius)
+        customView.indicator.setColors(onColor, offColor, bgColor)
 
 //        if (isCharging)
 //            customView.indicator.enableAnimation()

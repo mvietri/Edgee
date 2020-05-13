@@ -2,6 +2,7 @@ package com.helas.edgee
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -10,6 +11,7 @@ import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import dev.sasikanth.colorsheet.ColorSheet
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -144,6 +146,60 @@ class MainActivity : AppCompatActivity() {
                     getSharedPreferences("StartingAngleValue", Context.MODE_PRIVATE).edit()
                 editor.putFloat("YPosition", yPosition.toFloat())
                 editor.apply()
+            }
+        })
+
+        btnRemainingColor.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+                val colors =  intArrayOf(Color.GREEN, Color.BLUE, Color.BLACK, Color.WHITE, Color.YELLOW)
+                ColorSheet().colorPicker(
+                    colors = colors,
+                    listener = { color ->
+                        // Handle color
+
+                        val editor =
+                            getSharedPreferences("StartingAngleValue", Context.MODE_PRIVATE).edit()
+                        editor.putInt("OnColor", color)
+                        editor.apply()
+                    })
+                    .show(supportFragmentManager)
+            }
+        })
+
+
+        btnNotAvailableColor.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+                val colors =  intArrayOf(Color.RED, Color.DKGRAY, Color.GRAY, Color.MAGENTA, Color.BLACK)
+                ColorSheet().colorPicker(
+                    colors = colors,
+                    listener = { color ->
+                        // Handle color
+
+                        val editor =
+                            getSharedPreferences("StartingAngleValue", Context.MODE_PRIVATE).edit()
+                        editor.putInt("OffColor", color)
+                        editor.apply()
+                    })
+                    .show(supportFragmentManager)
+            }
+        })
+
+
+
+        btnBackgroundColor.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+                val colors =  intArrayOf(Color.TRANSPARENT, Color.GREEN, Color.BLUE, Color.BLACK,  Color.YELLOW)
+                ColorSheet().colorPicker(
+                    colors = colors,
+                    listener = { color ->
+                        // Handle color
+
+                        val editor =
+                            getSharedPreferences("StartingAngleValue", Context.MODE_PRIVATE).edit()
+                        editor.putInt("BgColor", color)
+                        editor.apply()
+                    })
+                    .show(supportFragmentManager)
             }
         })
 

@@ -255,6 +255,24 @@
 
             </LinearLayout>
 
+            <Button
+                android:id="@+id/btnRemainingColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set Remaining battery color" />
+
+            <Button
+                android:id="@+id/btnNotAvailableColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set No-battery color" />
+
+            <Button
+                android:id="@+id/btnBackgroundColor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set Background color" />
+
 
         </LinearLayout>
 
