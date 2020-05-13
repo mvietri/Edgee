@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AngleFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            style="@style/Widget.MaterialComponents.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:text="Starting Angle" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/seekBarStartAngle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueTo="360"
+                android:valueFrom="1"
+                android:value="270" />
+
+
+        </LinearLayout>
+
+        <TextView
+            style="@style/Widget.MaterialComponents.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:text="Ending Angle" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/seekBarEndAngle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueTo="360"
+                android:valueFrom="1"
+                android:value="90" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>
