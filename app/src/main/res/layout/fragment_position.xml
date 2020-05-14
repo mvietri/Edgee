@@ -13,8 +13,6 @@
         android:paddingTop="5dp"
         android:orientation="vertical">
 
-
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="25dp"
@@ -34,15 +32,6 @@
                 android:layout_height="match_parent"
                 android:text="-10" />
 
-            <!--                <SeekBar-->
-            <!--                    android:id="@+id/seekBarY"-->
-            <!--                    android:layout_width="150dp"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:max="2000"-->
-            <!--                    android:min="1"-->
-            <!--                    android:progress="100" />-->
-
-
 
             <com.google.android.material.button.MaterialButton
                 app:cornerRadius="5dp"
@@ -54,7 +43,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textViewXValue"
-                android:layout_width="62dp"
+                android:layout_width="78dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
                 android:text="0"
@@ -100,14 +89,6 @@
                 android:layout_height="match_parent"
                 android:text="-10" />
 
-            <!--                <SeekBar-->
-            <!--                    android:id="@+id/seekBarY"-->
-            <!--                    android:layout_width="150dp"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:max="2000"-->
-            <!--                    android:min="1"-->
-            <!--                    android:progress="100" />-->
-
             <com.google.android.material.button.MaterialButton
                 app:cornerRadius="5dp"
                 android:layout_marginRight="10dp"
@@ -118,7 +99,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textViewYValue"
-                android:layout_width="63dp"
+                android:layout_width="78dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
                 android:text="0"
