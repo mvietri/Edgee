@@ -52,7 +52,19 @@ class PositionFragment : Fragment() {
         this.plusOneYButton.setOnClickListener { changePosition(1, false) }
         this.plusTenYButton.setOnClickListener { changePosition(10, false) }
 
+        this.loadSettings()
+
         return view
+    }
+
+    private fun loadSettings() {
+        val positionPrefs = activity?.getSharedPreferences("PositionSetting", Context.MODE_PRIVATE)
+
+        xPosition = positionPrefs!!.getInt("XPosition", 0)
+        yPosition = positionPrefs!!.getInt("YPosition", 0)
+
+        xPositionTextView.text = xPosition.toString()
+        yPositionTextView.text = yPosition.toString()
     }
 
     private fun changePosition(change: Int, isXPosition: Boolean) {

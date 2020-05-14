@@ -44,10 +44,11 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textViewXValue"
                 android:layout_width="78dp"
+                android:gravity="center"
                 android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
                 android:text="0"
-                android:textSize="38dp" />
+                android:textSize="25dp" />
 
 
             <com.google.android.material.button.MaterialButton
@@ -100,10 +101,11 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textViewYValue"
                 android:layout_width="78dp"
+                android:gravity="center"
                 android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
                 android:text="0"
-                android:textSize="38dp" />
+                android:textSize="25dp" />
 
             <com.google.android.material.button.MaterialButton
                 app:cornerRadius="5dp"
