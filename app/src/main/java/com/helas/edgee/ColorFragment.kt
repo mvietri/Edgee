@@ -8,12 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.flask.colorpicker.ColorPickerView
+import com.flask.colorpicker.builder.ColorPickerDialogBuilder
 import com.google.android.material.slider.Slider
 import com.google.android.material.slider.Slider.OnSliderTouchListener
-import com.google.android.material.snackbar.Snackbar
-import dev.sasikanth.colorsheet.ColorSheet
-import kotlin.math.roundToInt
-
 
 class ColorFragment : Fragment() {
     private lateinit var strokeWidthSlider: Slider
@@ -35,56 +33,52 @@ class ColorFragment : Fragment() {
         strokeWidthSlider.addOnSliderTouchListener(strokeWidthTouchListener)
         radiusSlider.addOnSliderTouchListener(radiusTouchListener)
 
-        onColorButton.setOnClickListener {
-            val colors =  intArrayOf(Color.parseColor("#264653"), Color.parseColor("#2a9d8f"), Color.parseColor("#e9c46a"), Color.parseColor("#f4a261"), Color.parseColor("#e76f51"))
-            fragmentManager?.let {
-                ColorSheet().colorPicker(
-                    colors = colors,
-                    listener = { color -> saveSetting("OnColor", color)  })
-                    .show(it)
-            }
-        }
 
-        offColorButton.setOnClickListener {
-            val colors =  intArrayOf(Color.parseColor("#4f000b"), Color.parseColor("#720026"), Color.parseColor("#ce4257"), Color.parseColor("#ff7f51"), Color.parseColor("#ff9b54"))
+        onColorButton.setOnClickListener { showColorPickerFor("OnColor") }
+        offColorButton.setOnClickListener { showColorPickerFor("OffColor") }
+        bgColorButton.setOnClickListener { showColorPickerFor("BgColor") }
 
-            fragmentManager?.let { it1 ->
-                ColorSheet().colorPicker(
-                    colors = colors,
-                    listener = { color -> saveSetting("OffColor", color)  })
-                    .show(it1)
-            }
-        }
-        
-        bgColorButton.setOnClickListener {
-            val colors =  intArrayOf(Color.TRANSPARENT, Color.parseColor("#090e0c"), Color.parseColor("#5f6d72"), Color.parseColor("#262b38"), Color.parseColor("#1c222c"), Color.parseColor("#253237"))
-
-            fragmentManager?.let {
-                ColorSheet().colorPicker(
-                    colors = colors,
-                    listener = { color -> saveSetting("BgColor", color)  })
-                    .show(it)
-            }
-        }
+        this.loadSettings()
 
         return view
     }
 
+    private fun loadSettings() {
+        val colorPrefs = activity?.getSharedPreferences("ColorSetting", Context.MODE_PRIVATE)
+
+        strokeWidthSlider.value = colorPrefs!!.getFloat("StrokeWidth", 10f)
+        radiusSlider.value = colorPrefs!!.getFloat("Radius", 30f)
+    }
+
+    private fun showColorPickerFor(colorName: String) {
+        ColorPickerDialogBuilder
+            .with(context)
+            .setTitle("Pick a Color")
+            .initialColor(Color.GREEN)
+            .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
+            .density(12)
+            .setOnColorSelectedListener { }
+            .setPositiveButton( "OK" ) { _, color, _ ->saveSetting(colorName, color) }
+            .setNegativeButton( "Cancel"  ) { _, _ -> }
+            .build()
+            .show()
+    }
+
     private val strokeWidthTouchListener: OnSliderTouchListener = object : OnSliderTouchListener {
         override fun onStartTrackingTouch(slider: Slider) { }
-        override fun onStopTrackingTouch(slider: Slider) { saveStrokeWidth(slider.value.roundToInt()) }
+        override fun onStopTrackingTouch(slider: Slider) { saveStrokeWidth(slider.value) }
     }
 
     private val radiusTouchListener: OnSliderTouchListener = object : OnSliderTouchListener {
         override fun onStartTrackingTouch(slider: Slider) { }
-        override fun onStopTrackingTouch(slider: Slider) { saveRadius(slider.value.roundToInt()) }
+        override fun onStopTrackingTouch(slider: Slider) { saveRadius(slider.value) }
     }
 
-    fun saveRadius(radius: Int) {
+    fun saveRadius(radius: Float) {
         saveSetting("Radius", radius)
     }
 
-    fun saveStrokeWidth(strokeWidth: Int) {
+    fun saveStrokeWidth(strokeWidth: Float) {
         saveSetting("StrokeWidth", strokeWidth)
     }
 
@@ -93,6 +87,15 @@ class ColorFragment : Fragment() {
 
         if (editor != null) {
             editor.putInt(settingName, value)
+            editor.apply()
+        }
+    }
+
+    private fun saveSetting(settingName: String, value: Float) {
+        val editor = activity?.getSharedPreferences("ColorSetting", Context.MODE_PRIVATE)?.edit()
+
+        if (editor != null) {
+            editor.putFloat(settingName, value)
             editor.apply()
         }
     }

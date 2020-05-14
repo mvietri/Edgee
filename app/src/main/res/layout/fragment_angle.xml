@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:valueTo="360"
-                android:valueFrom="1"
+                android:valueFrom="0"
                 android:value="270" />
 
 
