@@ -19,8 +19,8 @@ branches:
 before_deploy:
 - git config --local user.name "Travis Auto-Tag"
 - git config --local user.email "helas+travisci@runbox.me"
-- export GIT_TAG="0.0.$((`git log -n 1 --format=%ct` / (60*60*24)))${TAG_SUFFIX}"
-- git tag $GIT_TAG -a -m "Travis auto-generated tag for build $TRAVIS_BUILD_NUMBER."
+- export TRAVIS_TAG="0.0.$((`git log -n 1 --format=%ct` / (60*60*24)))${TAG_SUFFIX}"
+- git tag $TRAVIS_TAG -a -m "Travis auto-generated tag for build $TRAVIS_BUILD_NUMBER."
 before_install: 
 - yes | sdkmanager "build-tools;29.0.3"
 - chmod +x gradlew 
