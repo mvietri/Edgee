@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">Edgee</string>
     <string name="accessibility_service_description">Draw a circle around notch displaying battery level and notifications</string>
-    <string name="radius_hint">Radius Size</string>
     <string name="switch_hint">Enable Service</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

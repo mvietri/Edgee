@@ -9,22 +9,21 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.os.BatteryManager
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.Transformation
 
 class IndicatorView : View {
-    private var startAngle = 0f
-    private var endAngle = 360f
+    private var startAngle = 0
+    private var endAngle = 360
 
-    private var radius = 30f
+    private var radius = 30
 
-    private var strokeWidth = 10f
+    private var strokeWidth = 10
 
-    private var xPosition = 0f
-    private var yPosition = 0f
+    private var xPosition = 0
+    private var yPosition = 0
 
     private var onColor = Color.GREEN.toInt()
     private var offColor = Color.RED.toInt()
@@ -32,33 +31,33 @@ class IndicatorView : View {
 
     private var isChargingAnimationOn: Boolean = false;
 
-    fun getStrokeWidth(): Float {
+    fun getStrokeWidth(): Int {
         return strokeWidth
     }
 
-    fun getArcAngle(): Float {
+    fun getArcAngle(): Int {
         return startAngle
     }
 
     fun enableAnimation() {
-        startAnimation(ChargingAnimation(0f, 360f, 2500 ))
+        startAnimation(ChargingAnimation(0, 360, 2500 ))
     }
 
-    fun setStrokeWidth(strokeWidth: Float) {
+    fun setStrokeWidth(strokeWidth: Int) {
         this.strokeWidth = strokeWidth
     }
 
-    fun setAngles(startAngle: Float, endAngle: Float) {
+    fun setAngles(startAngle: Int, endAngle: Int) {
         this.startAngle = startAngle
         this.endAngle = endAngle
     }
 
-    fun setPosition(x: Float, y: Float) {
+    fun setPosition(x: Int, y: Int) {
         this.xPosition = x
         this.yPosition = y
     }
 
-    fun setRadius(r: Float) {
+    fun setRadius(r: Int) {
         this.radius = r
     }
 
@@ -68,37 +67,28 @@ class IndicatorView : View {
         this.bgColor = bgColor
     }
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) { }
 
-    }
-
-
-    inner class ChargingAnimation(startAngle: Float, sweepAngle: Float, duration: Long) :
+    inner class ChargingAnimation(startAngle: Int, sweepAngle: Int, duration: Long) :
         Animation() {
-        var mStartAngle: Float
-        var mSweepAngle: Float
-        override fun applyTransformation(
-            interpolatedTime: Float,
-            t: Transformation?
-        ) {
-            val currAngle =
-                mStartAngle + (mSweepAngle * interpolatedTime)
-            this@IndicatorView.startAngle = -currAngle //negative for counterclockwise animation.
+        var mStartAngle: Int = startAngle
+        var mSweepAngle: Int = sweepAngle
+
+        override fun applyTransformation(interpolatedTime: Float,  t: Transformation?) {
+            val currAngle = mStartAngle + (mSweepAngle * interpolatedTime)
+            this@IndicatorView.startAngle =  (-currAngle).toInt()
             invalidate()
         }
 
         init {
-            mStartAngle = startAngle.toFloat()
-            mSweepAngle = sweepAngle.toFloat()
             setDuration(duration)
             interpolator = LinearInterpolator()
-            setRepeatCount(Animation.INFINITE)
-            setRepeatMode(Animation.RESTART)
+            repeatCount = INFINITE
+            repeatMode = RESTART
         }
     }
 
     override fun onDraw(canvas: Canvas) {
-        Log.i("EE-LEVEL",  "onDraw()")
         super.onDraw(canvas)
 
         // TODO: consider storing these as member variables to reduce
@@ -111,66 +101,51 @@ class IndicatorView : View {
         val contentWidth = width - paddingLeft - paddingRight
         val contentHeight = height - paddingTop - paddingBottom
 
-        //canvas?.drawCircle(100f, 20f, 70f, paint)
-var bat = this.getBatteryPercentage(getContext())
+        var bat = this.getBatteryPercentage(context)
 
         if (bat >= 70 && !this.isChargingAnimationOn) {
-         //   startAnimation(ChargingAnimation(0, 10, 100000))
             this.isChargingAnimationOn = true;
         }
 
-       bat = (((bat * this.endAngle) / 100).toInt())
-
-        Log.i("EE-LEVEL",  "$bat%")
-
-        val width = width.toFloat()
-        val height = height.toFloat()
+       bat = ((bat * this.endAngle) / 100)
 
         val paintBlack = Paint()
-        paintBlack.strokeWidth = strokeWidth
+        paintBlack.strokeWidth = strokeWidth.toFloat()
         paintBlack.style = Paint.Style.STROKE
         paintBlack.color = bgColor
 
         val paint = Paint()
-        paint.strokeWidth = strokeWidth
+        paint.strokeWidth = strokeWidth.toFloat()
         paint.style = Paint.Style.STROKE
         paint.color =offColor
 
         val paintAvailable = Paint()
-        paintAvailable.strokeWidth = strokeWidth
+        paintAvailable.strokeWidth = strokeWidth.toFloat()
         paintAvailable.style = Paint.Style.STROKE
         paintAvailable.color =onColor
 
-        val center_x: Float
-        val center_y: Float
         val oval = RectF()
 
-        center_x = xPosition
-        center_y = yPosition
+        val centerX: Int = xPosition
+        val centerY: Int = yPosition
 
-        oval[(center_x - radius), (center_y - radius), center_x + radius] = center_y + radius
-
-        //paint.shader = SweepGradient(getWidth() /2f , getHeight() / 2f, gradientColors, gradientPositions)
+        oval[((centerX - radius).toFloat()), ((centerY - radius).toFloat()), (centerX + radius).toFloat()] = (centerY + radius).toFloat()
 
         canvas.save()
-      //  canvas.rotate(115f, xPosition, yPosition)
-        //canvas.drawArc(oval, startAngle, bat.toFloat(), false, paint)
-
-
-        // canvas.drawArc(oval, startAngle, bat.toFloat(), false, paint)
 
         // optional background
-       if (bgColor != Color.TRANSPARENT) canvas.drawArc(oval, 0f, 360f, false, paintBlack)
-        canvas.drawArc(oval, startAngle, endAngle, false, paint)
-        canvas.drawArc(oval, startAngle,  bat.toFloat(),false, paintAvailable)
+        if (bgColor != Color.TRANSPARENT) canvas.drawArc(oval, 0f, 360f, false, paintBlack)
 
-       // canvas.drawCircle(xPosition, xPosition, radius, paint)
+        // arc width (from start angle to end)
+        canvas.drawArc(oval, startAngle.toFloat(), endAngle.toFloat(), false, paint)
+
+        // fill it from start o current battery level
+        canvas.drawArc(oval, startAngle.toFloat(),  bat.toFloat(),false, paintAvailable)
+
         canvas.restore()
-
-       // canvas.drawArc(oval, this.startAngle, bat.toFloat(), false, paint)
     }
 
-    fun getBatteryPercentage(context: Context): Int {
+    private fun getBatteryPercentage(context: Context): Int {
         val iFilter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
         val batteryStatus = context.registerReceiver(null, iFilter)
         val level = batteryStatus?.getIntExtra(
