@@ -12,20 +12,23 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
 import kotlinx.android.synthetic.main.activity_main.*
 
+const val NUMBER_OF_TABS: Int = 3
 
 class MainActivity : AppCompatActivity() {
 
-    class IntroViewPagerAdapter(supportFragmentManager: FragmentManager) : FragmentStatePagerAdapter(supportFragmentManager) {
+    class IntroViewPagerAdapter(supportFragmentManager: FragmentManager) :
+        FragmentStatePagerAdapter(supportFragmentManager) {
         override fun getItem(position: Int): Fragment {
             if (position == 1)
-                return ColorFragment.newInstance("Position$position")
+                return ColorFragment.newInstance()
             if (position == 2)
-                return AngleFragment.newInstance("Position$position")
+                return AngleFragment.newInstance()
 
-            return PositionFragment.newInstance("Position$position")
+            return PositionFragment.newInstance()
         }
+
         override fun getCount(): Int {
-            return 3
+            return NUMBER_OF_TABS
         }
     }
 
@@ -39,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         tabLayout.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(vpPager))
         vpPager.addOnPageChangeListener(TabLayoutOnPageChangeListener(tabLayout))
 
-        switch_service.setOnClickListener{
+        switch_service.setOnClickListener {
             val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
             startActivityForResult(intent, 0)
         }
@@ -54,7 +57,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun isAccessServiceEnabled(context: Context): Boolean {
         val prefString =
-            Settings.Secure.getString(context.contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
+            Settings.Secure.getString(
+                context.contentResolver,
+                Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES
+            )
         if (prefString === null) return false
         return prefString.contains("${context.packageName}/${context.packageName}.${"OverlayService"}")
     }

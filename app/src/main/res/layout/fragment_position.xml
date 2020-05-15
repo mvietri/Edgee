@@ -10,124 +10,96 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="5dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="5dp">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/x_position_label"
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:text="X position" />
-
+            android:text="@string/x_position_hint" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
-                app:cornerRadius="5dp"
-                android:layout_marginRight="10dp"
                 android:id="@+id/btnPosXMinusTen"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:text="-10" />
-
-
-            <com.google.android.material.button.MaterialButton
-                app:cornerRadius="5dp"
                 android:layout_marginRight="10dp"
-                android:id="@+id/btnPosXMinusOne"
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:text="-1" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textViewXValue"
-                android:layout_width="78dp"
-                android:gravity="center"
-                android:layout_height="match_parent"
-                android:layout_marginRight="10dp"
-                android:text="0"
-                android:textSize="25dp" />
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnPosXPlusOne"
-                android:layout_marginRight="10dp"
-                android:layout_width="56dp"
-                android:layout_height="match_parent"
-                android:text="+1"
+                android:text="@string/minus_ten_button"
                 app:cornerRadius="5dp" />
 
             <com.google.android.material.button.MaterialButton
-                app:cornerRadius="5dp"
+                android:id="@+id/btnPosXMinusOne"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
+                android:text="@string/minus_one_button"
+                app:cornerRadius="5dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPosXPlusOne"
+                android:layout_width="56dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:text="@string/plus_one_button"
+                app:cornerRadius="5dp" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnPosXPlusTen"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:text="+10" />
-
-
+                android:layout_marginRight="10dp"
+                android:text="@string/plus_ten_button"
+                app:cornerRadius="5dp" />
         </LinearLayout>
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/y_position_label"
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:text="Y Position" />
-
+            android:text="@string/y_position_hint" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-
             <com.google.android.material.button.MaterialButton
-                app:cornerRadius="5dp"
-                android:layout_marginRight="10dp"
                 android:id="@+id/btnPosYMinusTen"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:text="-10" />
+                android:layout_marginRight="10dp"
+                android:text="@string/minus_ten_button"
+                app:cornerRadius="5dp" />
 
             <com.google.android.material.button.MaterialButton
-                app:cornerRadius="5dp"
-                android:layout_marginRight="10dp"
                 android:id="@+id/btnPosYMinusOne"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:text="-1" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textViewYValue"
-                android:layout_width="78dp"
-                android:gravity="center"
-                android:layout_height="match_parent"
                 android:layout_marginRight="10dp"
-                android:text="0"
-                android:textSize="25dp" />
+                android:text="@string/minus_one_button"
+                app:cornerRadius="5dp" />
 
             <com.google.android.material.button.MaterialButton
-                app:cornerRadius="5dp"
-                android:layout_marginRight="10dp"
                 android:id="@+id/btnPosYPlusOne"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:text="+1" />
+                android:layout_marginRight="10dp"
+                android:text="@string/plus_one_button"
+                app:cornerRadius="5dp" />
 
             <com.google.android.material.button.MaterialButton
-                app:cornerRadius="5dp"
-                android:layout_marginRight="10dp"
                 android:id="@+id/btnPosYPlusTen"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:text="+10" />
-
-
-
+                android:layout_marginRight="10dp"
+                android:text="@string/plus_ten_button"
+                app:cornerRadius="5dp" />
         </LinearLayout>
-
-
-
     </LinearLayout>
 </FrameLayout>

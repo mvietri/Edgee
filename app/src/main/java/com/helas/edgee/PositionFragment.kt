@@ -26,7 +26,11 @@ class PositionFragment : Fragment() {
     var xPosition: Int = 0
     var yPosition: Int = 0
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_position, container, false)
 
         this.minusTenXButton = view.findViewById(R.id.btnPosXMinusTen) as Button
@@ -39,8 +43,8 @@ class PositionFragment : Fragment() {
         this.plusOneYButton = view.findViewById(R.id.btnPosYPlusOne) as Button
         this.plusTenYButton = view.findViewById(R.id.btnPosYPlusTen) as Button
 
-        this.xPositionTextView = view.findViewById(R.id.textViewXValue) as MaterialTextView
-        this.yPositionTextView = view.findViewById(R.id.textViewYValue) as MaterialTextView
+        this.xPositionTextView = view.findViewById(R.id.x_position_label) as MaterialTextView
+        this.yPositionTextView = view.findViewById(R.id.y_position_label) as MaterialTextView
 
         this.minusTenXButton.setOnClickListener { changePosition(-10, true) }
         this.minusOneXButton.setOnClickListener { changePosition(-1, true) }
@@ -58,39 +62,45 @@ class PositionFragment : Fragment() {
     }
 
     private fun loadSettings() {
-        val positionPrefs = activity?.getSharedPreferences("PositionSetting", Context.MODE_PRIVATE)
+        val positionPrefs = activity?.getSharedPreferences(
+            getString(R.string.pref_position_setting),
+            Context.MODE_PRIVATE
+        )
 
-        xPosition = positionPrefs!!.getInt("XPosition", 0)
-        yPosition = positionPrefs!!.getInt("YPosition", 0)
+        xPosition = positionPrefs!!.getInt(getString(R.string.position_x_setting), 0)
+        yPosition = positionPrefs!!.getInt(getString(R.string.position_y_setting), 0)
 
-        xPositionTextView.text = xPosition.toString()
-        yPositionTextView.text = yPosition.toString()
+        updateLabels()
+    }
+
+    private fun updateLabels() {
+        xPositionTextView.text = String.format(getString(R.string.x_position_hint), xPosition)
+        yPositionTextView.text = String.format(getString(R.string.y_position_hint), yPosition)
     }
 
     private fun changePosition(change: Int, isXPosition: Boolean) {
         if (isXPosition) {
             xPosition += change
-            xPositionTextView.text = xPosition.toString()
         } else {
             yPosition += change
-            yPositionTextView.text = yPosition.toString()
         }
 
-        val editor = activity?.getSharedPreferences("PositionSetting", Context.MODE_PRIVATE)?.edit()
+        val editor = activity?.getSharedPreferences(
+            getString(R.string.pref_position_setting),
+            Context.MODE_PRIVATE
+        )?.edit()
 
         if (editor != null) {
-            editor.putInt("XPosition", xPosition)
-            editor.putInt("YPosition", yPosition)
+            editor.putInt(getString(R.string.position_x_setting), xPosition)
+            editor.putInt(getString(R.string.position_y_setting), yPosition)
             editor.apply()
+            updateLabels()
         }
     }
 
     companion object {
-        fun newInstance(title: String): Fragment {
-            val fragment = PositionFragment()
-            val args = Bundle()
-            args.putString("title", title)
-            fragment.arguments = args
-            return fragment
-        }}
+        fun newInstance(): Fragment {
+            return PositionFragment()
+        }
+    }
 }

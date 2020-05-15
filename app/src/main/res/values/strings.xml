@@ -1,7 +1,53 @@
 <resources>
     <string name="app_name">Edgee</string>
-    <string name="accessibility_service_description">Draw a circle around notch displaying battery level and notifications</string>
-    <string name="switch_hint">Enable Service</string>
+    <string name="accessibility_service_description">Display a circle (ring) in any place of the screen. Currently it shows the remaining battery level using a combination of colors.</string>
+    <string name="package_name">com.helas.edgee</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Main Activity strings -->
+    <string name="switch_hint">Enable Service</string>
+    <string name="position_tab_name">Position</string>
+    <string name="size_colors_tab_name">Size &amp; Colors</string>
+    <string name="angles_tab_name">Angles</string>
+
+    <!-- Position Fragment strings -->
+    <string name="x_position_hint">Position X: %d</string>
+    <string name="minus_ten_button" translatable="false">-10</string>
+    <string name="minus_one_button" translatable="false">-1</string>
+    <string name="plus_one_button" translatable="false">+1</string>
+    <string name="plus_ten_button" translatable="false">+10</string>
+    <string name="y_position_hint">Position Y: %d</string>
+
+    <!-- Color Fragment strings -->
+    <string name="stroke_width_hint">Stroke Width</string>
+    <string name="radius_hint">Radius</string>
+    <string name="set_remaining_battery_color_button">Remaining battery Color</string>
+    <string name="set_no_battery_color_button">Battery background color</string>
+    <string name="set_background_color_button">Ring background color</string>
+
+    <!-- Angle Fragment strings -->
+    <string name="starting_angle_hint">Starting Angle</string>
+    <string name="ending_angle_hint">Ending Angle</string>
+
+    <!-- Pref Position Settings' strings -->
+    <string name="pref_position_setting" translatable="false">PositionSetting</string>
+    <string name="position_x_setting" translatable="false">XPosition</string>
+    <string name="position_y_setting" translatable="false">YPosition</string>
+
+    <!-- Pref Color Settings' strings -->
+    <string name="pref_color_setting" translatable="false">ColorSetting</string>
+    <string name="stroke_width_setting" translatable="false">StrokeWidth</string>
+    <string name="radius_setting" translatable="false">Radius</string>
+    <string name="on_color_setting" translatable="false">OnColor</string>
+    <string name="off_color_setting" translatable="false">OffColor</string>
+    <string name="bg_color_setting" translatable="false">BgColor</string>
+    <string name="pick_color_dialog_title">Pick a Color</string>
+
+    <!-- Pref Position Settings' strings -->
+    <string name="pref_angle_setting" translatable="false">AngleSetting</string>
+    <string name="start_angle_setting" translatable="false">StartAngle</string>
+    <string name="end_angle_setting" translatable="false">EndAngle</string>
+
+    <!-- General Strings -->
+    <string name="ok_button">OK</string>
+    <string name="cancel_button">Cancel</string>
 </resources>

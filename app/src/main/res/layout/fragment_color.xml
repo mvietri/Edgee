@@ -12,7 +12,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:text="Stroke Width" />
+            android:text="@string/stroke_width_hint" />
 
 
         <LinearLayout
@@ -38,7 +38,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:text="Radius" />
+                android:text="@string/radius_hint" />
 
 
             <LinearLayout
@@ -61,6 +61,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
                 android:orientation="vertical">
 
 
@@ -70,21 +72,21 @@
                     android:id="@+id/btnRemainingColor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Set Remaining battery color" />
+                    android:text="@string/set_remaining_battery_color_button" />
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:id="@+id/btnNotAvailableColor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Set No-battery color" />
+                    android:text="@string/set_no_battery_color_button" />
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:id="@+id/btnBackgroundColor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Set Background color" />
+                    android:text="@string/set_background_color_button" />
 
             </LinearLayout>
 

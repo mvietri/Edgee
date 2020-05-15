@@ -2,13 +2,9 @@ package com.helas.edgee
 
 import android.accessibilityservice.AccessibilityService
 import android.content.*
-import android.content.pm.ActivityInfo
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.BatteryManager
-
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -16,21 +12,25 @@ import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import kotlinx.android.synthetic.main.activity_indicator.view.*
 
-
 class OverlayService: AccessibilityService() {
     private lateinit var lastCustomView: View
+
     private var hasLoadedSettingsOnce: Boolean = false
+
+    private var batteryLevel: Int = -1
+    private var batterySatus: Int = -1
+    private var batteryIsCharging: Boolean = false
 
     private val mBatInfoReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(ctxt: Context?, intent: Intent) {
-            val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)
-            val status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
-            val isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL
-            updateIndicator(false, isCharging)
+            batteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, 0)
+            batterySatus = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
+            batteryIsCharging = (batterySatus == BatteryManager.BATTERY_STATUS_CHARGING || batterySatus == BatteryManager.BATTERY_STATUS_FULL)
+            updateIndicator(false)
         }
     }
 
-    fun updateIndicator(reloadConfig: Boolean, isCharging: Boolean) {
+    fun updateIndicator(reloadConfig: Boolean) {
         val inflater = baseContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val wm = getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val customView = inflater.inflate(R.layout.activity_indicator, null)
@@ -50,33 +50,33 @@ class OverlayService: AccessibilityService() {
         localLayoutParams.height  =  WindowManager.LayoutParams.WRAP_CONTENT
         localLayoutParams.format = PixelFormat.TRANSPARENT
 
-        if (reloadConfig || !hasLoadedSettingsOnce) {
-            hasLoadedSettingsOnce = true
+        hasLoadedSettingsOnce = true
 
-            val positionPrefs = getSharedPreferences("PositionSetting", Context.MODE_PRIVATE)
-            val colorPrefs = getSharedPreferences("ColorSetting", Context.MODE_PRIVATE)
-            val anglePrefs = getSharedPreferences("AngleSetting", Context.MODE_PRIVATE)
+        val positionPrefs = getSharedPreferences(getString(R.string.pref_position_setting), Context.MODE_PRIVATE)
+        val colorPrefs = getSharedPreferences(getString(R.string.pref_color_setting), Context.MODE_PRIVATE)
+        val anglePrefs = getSharedPreferences(getString(R.string.pref_angle_setting), Context.MODE_PRIVATE)
 
-            var startAngle = anglePrefs.getFloat("StartAngle", 0f)
-            var endAngle = anglePrefs.getFloat("EndAngle", 360f)
+        var startAngle = anglePrefs.getFloat(getString(R.string.start_angle_setting), 0f)
+        var endAngle = anglePrefs.getFloat(getString(R.string.end_angle_setting), 360f)
 
-            var xPosition = positionPrefs.getInt("XPosition", 0)
-            var yPosition = positionPrefs.getInt("YPosition", 0)
+        var xPosition = positionPrefs.getInt(getString(R.string.position_x_setting), 0)
+        var yPosition = positionPrefs.getInt(getString(R.string.position_y_setting), 0)
 
-            var strokeWidth = colorPrefs.getFloat("StrokeWidth", 10f)
-            var radius = colorPrefs.getFloat("Radius", 30f)
-            var onColor = colorPrefs.getInt("OnColor", Color.GREEN)
-            var offColor = colorPrefs.getInt("OffColor", Color.RED)
-            var bgColor = colorPrefs.getInt("BgColor", Color.BLACK)
+        var strokeWidth = colorPrefs.getFloat(getString(R.string.stroke_width_setting), 10f)
+        var radius = colorPrefs.getFloat(getString(R.string.radius_setting), 30f)
+        var onColor = colorPrefs.getInt(getString(R.string.on_color_setting), Color.GREEN)
+        var offColor = colorPrefs.getInt(getString(R.string.off_color_setting), Color.RED)
+        var bgColor = colorPrefs.getInt(getString(R.string.bg_color_setting), Color.BLACK)
 
-            customView.indicator.setAngles(startAngle, endAngle)
-            customView.indicator.setPosition(xPosition, yPosition)
-            customView.indicator.setStrokeWidth(strokeWidth)
-            customView.indicator.setRadius(radius)
-            customView.indicator.setColors(onColor, offColor, bgColor)
-        }
+        customView.indicator.setAngles(startAngle, endAngle)
+        customView.indicator.setPosition(xPosition, yPosition)
+        customView.indicator.setStrokeWidth(strokeWidth)
+        customView.indicator.setRadius(radius)
+        customView.indicator.setColors(onColor, offColor, bgColor)
+        customView.indicator.setBatteryLevel(batteryLevel)
+        customView.indicator.initView()
 
-        if (isCharging)
+        if (batteryIsCharging)
            customView.indicator.enableAnimation()
 
         wm.addView(customView, localLayoutParams)
@@ -89,9 +89,7 @@ class OverlayService: AccessibilityService() {
         lastCustomView = customView
     }
 
-    override fun onInterrupt() {
-        this.unregisterReceiver(mBatInfoReceiver)
-    }
+    override fun onInterrupt() { }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -103,13 +101,16 @@ class OverlayService: AccessibilityService() {
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
-        Log.i("OverlayService", event.toString());
-        if (event.eventType == AccessibilityEvent.TYPE_VIEW_CLICKED || event.eventType == AccessibilityEvent.TYPE_VIEW_SELECTED || event.eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED) {
+        if (event.eventType == AccessibilityEvent.TYPE_VIEW_CLICKED ||
+            event.eventType == AccessibilityEvent.TYPE_VIEW_SELECTED ||
+            event.eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED)
+        {
             if (event.packageName != null && event.className != null) {
                 val componentName = ComponentName(event.packageName.toString(), event.className.toString())
 
-                if (componentName.flattenToShortString().startsWith("com.helas.edgee", true)) {
-                    updateIndicator(true, isCharging = false)
+                // Update the View is our Activity is being used
+                if (componentName.flattenToShortString().startsWith(getString(R.string.package_name), true)) {
+                    updateIndicator(true)
                 }
             }
         }

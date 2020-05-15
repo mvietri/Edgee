@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Edgee</string>
+    <string name="accessibility_service_description">Muestra un círculo (anillo) en cualquier lado de la pantalla. Por ahora sólo muestra el nivel de batería restante usando una combinación de colores.</string>
+    <string name="package_name">com.helas.edgee</string>
+
+    <!-- Main Activity strings -->
+    <string name="switch_hint">Habilitar Servicio</string>
+    <string name="position_tab_name">Posición</string>
+    <string name="size_colors_tab_name">Tamaño &amp; Colores</string>
+    <string name="angles_tab_name">Ángulos</string>
+
+    <!-- Position Fragment strings -->
+    <string name="x_position_hint">Posición X: %d</string>
+    <string name="y_position_hint">Posición Y: %d</string>
+
+    <!-- Color Fragment strings -->
+    <string name="stroke_width_hint">Anchura del trazo</string>
+    <string name="radius_hint">Radio</string>
+    <string name = "set_remaining_battery_color_button">Color de batería restante</string>
+    <string name = "set_no_battery_color_button">Color de fondo de la batería</string>
+    <string name = "set_background_color_button">Color de fondo del anillo</string>
+
+    <!-- Angle Fragment strings -->
+    <string name = "starting_angle_hint">Ángulo inicial</string>
+    <string name = "ending_angle_hint">Ángulo final</string>
+
+    <!-- Pref Color Settings' strings -->
+    <string name="pick_color_dialog_title">Elegir un Color</string>
+
+    <!-- General Strings -->
+    <string name="ok_button">OK</string>
+    <string name="cancel_button">Cancelar</string>
+</resources>
