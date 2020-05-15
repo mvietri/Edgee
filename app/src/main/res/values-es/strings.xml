@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Edgee</string>
+    <!-- Edgee -->
     <string name="accessibility_service_description">Muestra un círculo (anillo) en cualquier lado de la pantalla. Por ahora sólo muestra el nivel de batería restante usando una combinación de colores.</string>
-    <string name="package_name">com.helas.edgee</string>
+    <string name="function_not_implemented">Función aún no implementada</string>
+
+    <!-- Menu -->
+    <string name="export_setting">Exportar Configuración</string>
+    <string name="import_setting">Importar Configuración</string>
 
     <!-- Main Activity strings -->
     <string name="switch_hint">Habilitar Servicio</string>
@@ -17,13 +21,13 @@
     <!-- Color Fragment strings -->
     <string name="stroke_width_hint">Anchura del trazo</string>
     <string name="radius_hint">Radio</string>
-    <string name = "set_remaining_battery_color_button">Color de batería restante</string>
-    <string name = "set_no_battery_color_button">Color de fondo de la batería</string>
-    <string name = "set_background_color_button">Color de fondo del anillo</string>
+    <string name="set_remaining_battery_color_button">Color de batería restante</string>        
+    <string name="set_no_battery_color_button">Color de fondo de la batería</string>        
+    <string name="set_background_color_button">Color de fondo del anillo</string>
 
     <!-- Angle Fragment strings -->
-    <string name = "starting_angle_hint">Ángulo inicial</string>
-    <string name = "ending_angle_hint">Ángulo final</string>
+    <string name="starting_angle_hint">Ángulo inicial</string>
+    <string name="ending_angle_hint">Ángulo final</string>
 
     <!-- Pref Color Settings' strings -->
     <string name="pick_color_dialog_title">Elegir un Color</string>
@@ -31,4 +35,7 @@
     <!-- General Strings -->
     <string name="ok_button">OK</string>
     <string name="cancel_button">Cancelar</string>
+    <string name="settings_exported">Configuración exportada!</string>
+    <string name="settings_imported">Configuración importada!</string>
+    <string name="cannot_write_file_permission">No tengo permisos para exportar la configuración</string>
 </resources>

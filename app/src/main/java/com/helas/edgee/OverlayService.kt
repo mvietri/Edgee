@@ -1,7 +1,10 @@
 package com.helas.edgee
 
 import android.accessibilityservice.AccessibilityService
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.BatteryManager
@@ -15,11 +18,11 @@ import kotlinx.android.synthetic.main.activity_indicator.view.*
 class OverlayService: AccessibilityService() {
     private lateinit var lastCustomView: View
 
-    private var hasLoadedSettingsOnce: Boolean = false
-
     private var batteryLevel: Int = -1
     private var batterySatus: Int = -1
     private var batteryIsCharging: Boolean = false
+
+    private var ACTION_EDGEE_CHANGED = ""
 
     private val mBatInfoReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(ctxt: Context?, intent: Intent) {
@@ -27,6 +30,12 @@ class OverlayService: AccessibilityService() {
             batterySatus = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
             batteryIsCharging = (batterySatus == BatteryManager.BATTERY_STATUS_CHARGING || batterySatus == BatteryManager.BATTERY_STATUS_FULL)
             updateIndicator(false)
+        }
+    }
+
+    private val mEdgeeSettingsReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            updateIndicator(true)
         }
     }
 
@@ -49,8 +58,6 @@ class OverlayService: AccessibilityService() {
         localLayoutParams.width = WindowManager.LayoutParams.MATCH_PARENT
         localLayoutParams.height  =  WindowManager.LayoutParams.WRAP_CONTENT
         localLayoutParams.format = PixelFormat.TRANSPARENT
-
-        hasLoadedSettingsOnce = true
 
         val positionPrefs = getSharedPreferences(getString(R.string.pref_position_setting), Context.MODE_PRIVATE)
         val colorPrefs = getSharedPreferences(getString(R.string.pref_color_setting), Context.MODE_PRIVATE)
@@ -94,25 +101,17 @@ class OverlayService: AccessibilityService() {
     override fun onDestroy() {
         super.onDestroy()
         this.unregisterReceiver(mBatInfoReceiver)
+        this.unregisterReceiver(mEdgeeSettingsReceiver)
     }
 
     override fun onServiceConnected() {
+        ACTION_EDGEE_CHANGED = getString(R.string.action_edgee_changed)
+
         this.registerReceiver(mBatInfoReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        this.registerReceiver(mEdgeeSettingsReceiver, IntentFilter(ACTION_EDGEE_CHANGED))
     }
 
-    override fun onAccessibilityEvent(event: AccessibilityEvent) {
-        if (event.eventType == AccessibilityEvent.TYPE_VIEW_CLICKED ||
-            event.eventType == AccessibilityEvent.TYPE_VIEW_SELECTED ||
-            event.eventType == AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED)
-        {
-            if (event.packageName != null && event.className != null) {
-                val componentName = ComponentName(event.packageName.toString(), event.className.toString())
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
 
-                // Update the View is our Activity is being used
-                if (componentName.flattenToShortString().startsWith(getString(R.string.package_name), true)) {
-                    updateIndicator(true)
-                }
-            }
-        }
     }
 }

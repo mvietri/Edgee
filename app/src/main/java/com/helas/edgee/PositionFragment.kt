@@ -1,6 +1,7 @@
 package com.helas.edgee
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,8 +24,8 @@ class PositionFragment : Fragment() {
     private lateinit var plusOneYButton: Button
     private lateinit var plusTenYButton: Button
 
-    var xPosition: Int = 0
-    var yPosition: Int = 0
+    private var xPosition: Int = 0
+    private var yPosition: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -96,6 +97,14 @@ class PositionFragment : Fragment() {
             editor.apply()
             updateLabels()
         }
+
+        notifyChanges()
+    }
+
+    private fun notifyChanges() {
+        val intent = Intent(getString(R.string.action_edgee_changed))
+        intent.putExtra(getString(R.string.pref_position_setting), "")
+        context!!.sendBroadcast(intent)
     }
 
     companion object {

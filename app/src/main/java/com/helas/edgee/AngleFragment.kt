@@ -1,6 +1,7 @@
 package com.helas.edgee
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -67,6 +68,14 @@ class AngleFragment : Fragment() {
             editor.putFloat(settingName, value)
             editor.apply()
         }
+
+        notifyChanges()
+    }
+
+    private fun notifyChanges() {
+        val intent = Intent(getString(R.string.action_edgee_changed))
+        intent.putExtra(getString(R.string.pref_angle_setting), "")
+        context!!.sendBroadcast(intent)
     }
 
     companion object {

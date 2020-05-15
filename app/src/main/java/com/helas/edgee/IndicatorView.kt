@@ -77,12 +77,12 @@ class IndicatorView : View {
         paintOnBattery = Paint()
         paintOnBattery.strokeWidth = strokeWidth
         paintOnBattery.style = Paint.Style.STROKE
-        paintOffBattery.color = onColor
+        paintOnBattery.color = onColor
 
         paintOffBattery = Paint()
         paintOffBattery.strokeWidth = strokeWidth
         paintOffBattery.style = Paint.Style.STROKE
-        paintOnBattery.color = offColor
+        paintOffBattery.color = offColor
 
         oval = RectF()
         oval[((xPosition - radius)), ((yPosition - radius)), (xPosition + radius)] =
@@ -111,6 +111,8 @@ class IndicatorView : View {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
+        canvas.save()
+
         // optional background
         if (bgColor != Color.TRANSPARENT) canvas.drawArc(oval, 0f, 360f, false, paintBackground)
 
@@ -119,6 +121,8 @@ class IndicatorView : View {
 
         // fill it from start o current battery level
         canvas.drawArc(oval, startAngle, currentBatteryLevel.toFloat(), false, paintOnBattery)
+
+        canvas.restore()
     }
 }
 

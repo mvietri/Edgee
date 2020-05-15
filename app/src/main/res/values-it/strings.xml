@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Edgee</string>
+    <!-- Edgee -->
     <string name="accessibility_service_description">Visualizza un cerchio (anello) su entrambi i lati dello schermo. Per ora mostra solo il livello rimanente della batteria usando una combinazione di colori.</string>
-    <string name="package_name">com.helas.edgee</string>
+    <string name="function_not_implemented">Funzione non ancora implementata</string>
+
+    <!-- Menu -->
+    <string name="export_setting">Esporta configurazione</string>
+    <string name="import_setting">Importa configurazione</string>
 
     <!-- Main Activity strings -->
     <string name="switch_hint">Abilita servizio</string>
@@ -31,4 +35,7 @@
     <!-- General Strings -->
     <string name="ok_button">OK</string>
     <string name="cancel_button">Annulla</string>
+    <string name="settings_exported">Configurazione esportata!</string>
+    <string name="settings_imported">Configurazione importata!</string>
+    <string name="cannot_write_file_permission">Nessun permesso per l\'esportazione nella configurazione</string>
 </resources>

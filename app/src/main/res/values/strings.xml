@@ -1,7 +1,14 @@
 <resources>
-    <string name="app_name">Edgee</string>
+    <!-- Edgee -->
+    <string name="app_name" translatable="false">Edgee</string>
     <string name="accessibility_service_description">Display a circle (ring) in any place of the screen. Currently it shows the remaining battery level using a combination of colors.</string>
-    <string name="package_name">com.helas.edgee</string>
+    <string name="package_name" translatable="false">com.helas.edgee</string>
+    <string name="action_edgee_changed" translatable="false">com.helas.edgee.REDRAW</string>
+    <string name="function_not_implemented">Function not implemented yet</string>
+
+    <!-- Menu -->
+    <string name="export_setting">Export Settings</string>
+    <string name="import_setting">Import Settings</string>
 
     <!-- Main Activity strings -->
     <string name="switch_hint">Enable Service</string>
@@ -50,4 +57,7 @@
     <!-- General Strings -->
     <string name="ok_button">OK</string>
     <string name="cancel_button">Cancel</string>
+    <string name="settings_exported">Settings exported!</string>
+    <string name="settings_imported">Settings imported!</string>
+    <string name="cannot_write_file_permission">I don\'t have permission to write to storage</string>
 </resources>
