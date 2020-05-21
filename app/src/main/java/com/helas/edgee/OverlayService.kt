@@ -65,6 +65,7 @@ class OverlayService: AccessibilityService() {
 
         var startAngle = anglePrefs.getFloat(getString(R.string.start_angle_setting), 0f)
         var endAngle = anglePrefs.getFloat(getString(R.string.end_angle_setting), 360f)
+        var cwMode = anglePrefs.getBoolean(getString(R.string.cw_ccw_setting), false)
 
         var xPosition = positionPrefs.getInt(getString(R.string.position_x_setting), 0)
         var yPosition = positionPrefs.getInt(getString(R.string.position_y_setting), 0)
@@ -75,7 +76,7 @@ class OverlayService: AccessibilityService() {
         var offColor = colorPrefs.getInt(getString(R.string.off_color_setting), Color.RED)
         var bgColor = colorPrefs.getInt(getString(R.string.bg_color_setting), Color.BLACK)
 
-        customView.indicator.setAngles(startAngle, endAngle)
+        customView.indicator.setAngles(startAngle, endAngle, cwMode)
         customView.indicator.setPosition(xPosition, yPosition)
         customView.indicator.setStrokeWidth(strokeWidth)
         customView.indicator.setRadius(radius)

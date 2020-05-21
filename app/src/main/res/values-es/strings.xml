@@ -13,6 +13,7 @@
     <string name="position_tab_name">Posición</string>
     <string name="size_colors_tab_name">Tamaño &amp; Colores</string>
     <string name="angles_tab_name">Ángulos</string>
+    <string name="cw_ccw_hint">En sentido horario / antihorario</string>
 
     <!-- Position Fragment strings -->
     <string name="x_position_hint">Posición X: %d</string>

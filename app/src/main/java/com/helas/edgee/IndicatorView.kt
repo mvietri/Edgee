@@ -1,10 +1,7 @@
 package com.helas.edgee
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.RectF
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.Animation
@@ -14,7 +11,7 @@ import android.view.animation.Transformation
 class IndicatorView : View {
     private var startAngle = 0f
     private var endAngle = 360f
-
+    private var cwMode = false
     private var radius = 30f
 
     private var strokeWidth = 10f
@@ -42,9 +39,10 @@ class IndicatorView : View {
         this.strokeWidth = strokeWidth
     }
 
-    fun setAngles(startAngle: Float, endAngle: Float) {
+    fun setAngles(startAngle: Float, endAngle: Float, cwMode: Boolean) {
         this.startAngle = startAngle
         this.endAngle = endAngle
+        this.cwMode = cwMode
     }
 
     fun setPosition(x: Int, y: Int) {
@@ -111,6 +109,7 @@ class IndicatorView : View {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
+
         canvas.save()
 
         // optional background
@@ -120,7 +119,7 @@ class IndicatorView : View {
         canvas.drawArc(oval, startAngle, endAngle, false, paintOffBattery)
 
         // fill it from start o current battery level
-        canvas.drawArc(oval, startAngle, currentBatteryLevel.toFloat(), false, paintOnBattery)
+        canvas.drawArc(oval,currentBatteryLevel.toFloat(), startAngle,  false, paintOnBattery)
 
         canvas.restore()
     }

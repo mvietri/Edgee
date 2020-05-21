@@ -34,6 +34,7 @@
     <!-- Angle Fragment strings -->
     <string name="starting_angle_hint">Starting Angle</string>
     <string name="ending_angle_hint">Ending Angle</string>
+    <string name="cw_ccw_hint">Clockwise/Counterclockwise</string>
 
     <!-- Pref Position Settings' strings -->
     <string name="pref_position_setting" translatable="false">PositionSetting</string>
@@ -60,4 +61,5 @@
     <string name="settings_exported">Settings exported!</string>
     <string name="settings_imported">Settings imported!</string>
     <string name="cannot_write_file_permission">I don\'t have permission to write to storage</string>
+    <string name="cw_ccw_setting">CWorCCW</string>
 </resources>

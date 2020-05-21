@@ -9,10 +9,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
         android:orientation="vertical">
 
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchCWCCW"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cw_ccw_hint" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             style="@style/Widget.MaterialComponents.TextView"
             android:layout_width="match_parent"
             android:layout_height="25dp"
@@ -31,16 +39,13 @@
                 android:valueTo="360"
                 android:valueFrom="0"
                 android:value="270" />
-
-
         </LinearLayout>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             style="@style/Widget.MaterialComponents.TextView"
             android:layout_width="match_parent"
             android:layout_height="25dp"
             android:text="@string/ending_angle_hint" />
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,9 +59,6 @@
                 android:valueTo="360"
                 android:valueFrom="1"
                 android:value="90" />
-
-
         </LinearLayout>
-
     </LinearLayout>
 </FrameLayout>

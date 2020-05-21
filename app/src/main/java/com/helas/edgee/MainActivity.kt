@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -86,19 +85,19 @@ class MainActivity : AppCompatActivity() {
 
             val contents = file1.readText()
 
-            val gson: Gson = Gson()
-            val obj2: EdgeeSettings = gson.fromJson(contents, EdgeeSettings::class.java)
-
-            val editor = this.getSharedPreferences(
-                getString(R.string.pref_position_setting),
-                Context.MODE_PRIVATE
-            )?.edit()
-
-            if (editor != null) {
-                editor.putInt(getString(R.string.position_x_setting), obj2.positionX.toInt())
-                editor.putInt(getString(R.string.position_y_setting),  obj2.positionY.toInt())
-                editor.apply()
-            }
+//            val gson: Gson = Gson()
+//            val obj2: EdgeeSettings = gson.fromJson(contents, EdgeeSettings::class.java)
+//
+//            val editor = this.getSharedPreferences(
+//                getString(R.string.pref_position_setting),
+//                Context.MODE_PRIVATE
+//            )?.edit()
+//
+//            if (editor != null) {
+//                editor.putInt(getString(R.string.position_x_setting), obj2.positionX.toInt())
+//                editor.putInt(getString(R.string.position_y_setting),  obj2.positionY.toInt())
+//                editor.apply()
+//            }
 
             Toast.makeText(this, getString(R.string.settings_imported), Toast.LENGTH_LONG).show()
         } catch (ex :Exception) {
@@ -122,14 +121,14 @@ class MainActivity : AppCompatActivity() {
                 var file: File = getAppSpecificAlbumStorageDir(applicationContext, "Settings")
 
                 /// Serialization
-                var obj: EdgeeSettings = EdgeeSettings.newInstance()
-                val gson: Gson = Gson()
-                val contents: String = gson.toJson(obj)
-
-                val file1 = File("$file/exported.json")
-
-                file1.createNewFile()
-                file1.writeText(contents)
+//                var obj: EdgeeSettings = EdgeeSettings.newInstance()
+//                val gson: Gson = Gson()
+//                val contents: String = gson.toJson(obj)
+//
+//                val file1 = File("$file/exported.json")
+//
+//                file1.createNewFile()
+//                file1.writeText(contents)
 
                 Toast.makeText(this, getString(R.string.settings_exported), Toast.LENGTH_LONG).show()
             } catch (ex :Exception) {
